@@ -45,3 +45,10 @@ lowercase groups with no `::` compression, and the serializer requires the
 caller to supply exactly eight groups. If you feed it `fe80::1` it will throw.
 Normalize upstream with `node:net` or your OS resolver before calling
 `serializeAddressField` if you need canonical compression.
+
+## Performance
+
+The window keeps a bounded buffer, so `push` is constant time and memory does not
+grow with the length of the stream. `peak` and `trough` are linear in the window
+size, which is the trade that keeps `push` cheap.
+
